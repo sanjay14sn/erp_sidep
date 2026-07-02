@@ -1,0 +1,98 @@
+export const defaultQuestionBank = {
+  "SAP Training": [
+    { id: 1, questionText: "What does SAP stand for?", options: ["Systems, Applications and Products", "Software and Programming", "System Architecture Platform", "Security and Protocol"], correctIndex: 0 },
+    { id: 2, questionText: "Which SAP module is primarily used for Financial Accounting?", options: ["SD", "MM", "FI", "PP"], correctIndex: 2 },
+    { id: 3, questionText: "What is the primary database technology behind modern SAP S/4HANA?", options: ["Oracle", "Microsoft SQL Server", "SAP HANA", "PostgreSQL"], correctIndex: 2 },
+    { id: 4, questionText: "Which module handles Sales and Distribution?", options: ["SD", "MM", "HR", "FICO"], correctIndex: 0 },
+    { id: 5, questionText: "What is SAP Fiori?", options: ["A programming language", "A user experience (UX) design framework", "A database system", "A cloud server provider"], correctIndex: 1 },
+    { id: 6, questionText: "In SAP MM, what does MM stand for?", options: ["Materials Management", "Manufacturing Modules", "Market Model", "Management Matrix"], correctIndex: 0 },
+    { id: 7, questionText: "What is a transaction code (T-code) in SAP?", options: ["A security password", "A command shortcut to access a specific screen", "A database query language", "A system error message"], correctIndex: 1 },
+    { id: 8, questionText: "Which of the following is SAP's proprietary programming language?", options: ["Python", "ABAP", "Java", "C#"], correctIndex: 1 },
+    { id: 9, questionText: "What type of system is SAP?", options: ["CRM only", "ERP system", "CMS portal", "OS platform"], correctIndex: 1 },
+    { id: 10, questionText: "What is the role of SAP Basis?", options: ["Sales operations", "System administration and technical infrastructure support", "Financial auditing", "Material dispatch"], correctIndex: 1 }
+  ],
+  "Data Analytics": [
+    { id: 1, questionText: "Which language is most commonly used for writing complex database queries in analytics?", options: ["HTML", "SQL", "CSS", "C++"], correctIndex: 1 },
+    { id: 2, questionText: "What is a KPI?", options: ["Key Product Index", "Key Performance Indicator", "Knowledge Process Integration", "Kernel Performance Interface"], correctIndex: 1 },
+    { id: 3, questionText: "In Python, which library is standard for data manipulation and analysis?", options: ["Django", "Flask", "Pandas", "Pygame"], correctIndex: 2 },
+    { id: 4, questionText: "What does data cleaning involve?", options: ["Deleting the entire database", "Formatting and removing incorrect, corrupt, or duplicate data", "Writing raw SQL queries", "Upgrading hardware servers"], correctIndex: 1 },
+    { id: 5, questionText: "What is the median of the dataset [3, 9, 4, 7, 5]?", options: ["4", "5", "5.6", "7"], correctIndex: 1 },
+    { id: 6, questionText: "Which chart is best suited for showing the relationship between two continuous variables?", options: ["Bar Chart", "Pie Chart", "Scatter Plot", "Histogram"], correctIndex: 2 },
+    { id: 7, questionText: "What is overfitting in predictive modeling?", options: ["When a model learns the training data noise rather than the signal", "When a model is too simple", "When data is completely clean", "When no training is done"], correctIndex: 0 },
+    { id: 8, questionText: "Which database type uses tables with rows and columns?", options: ["NoSQL", "Relational Database", "Key-Value store", "Graph Database"], correctIndex: 1 },
+    { id: 9, questionText: "What is the purpose of A/B testing?", options: ["Comparing two versions of a webpage to see which performs better", "Running automated backups", "Writing unit tests in Python", "Testing hardware memory limit"], correctIndex: 0 },
+    { id: 10, questionText: "What does BI stand for in analytics?", options: ["Basic Infrastructure", "Business Intelligence", "Binary Integration", "Build Instance"], correctIndex: 1 }
+  ],
+  "Artificial Intelligence": [
+    { id: 1, questionText: "What is Supervised Learning?", options: ["Learning with a teacher watching over you", "Training a model on labeled training data", "Learning from environment feedback", "Cluster identification without labels"], correctIndex: 1 },
+    { id: 2, questionText: "Which neural network architecture is best suited for image processing?", options: ["RNN", "LSTM", "CNN", "Transformer"], correctIndex: 2 },
+    { id: 3, questionText: "What does NLP stand for in AI?", options: ["Network Link Protocol", "Natural Language Processing", "Neural Lattice Programming", "Node Logic Pathway"], correctIndex: 1 },
+    { id: 4, questionText: "What is a neural network weight?", options: ["The physical weight of the CPU running the network", "A parameter that adjusts the strength of input signals", "The total count of hidden layers", "The execution time of one training epoch"], correctIndex: 1 },
+    { id: 5, questionText: "Who is widely considered the father of Artificial Intelligence?", options: ["Bill Gates", "Alan Turing", "John McCarthy", "Ada Lovelace"], correctIndex: 2 },
+    { id: 6, questionText: "What is reinforcement learning based on?", options: ["Labeled target tables", "Trial and error guided by rewards or penalties", "Unsupervised clustering", "Statics calculations"], correctIndex: 1 },
+    { id: 7, questionText: "Which AI model type is ChatGPT based on?", options: ["Decision Tree", "Support Vector Machine", "Transformer-based Large Language Model", "Convolutional Neural Network"], correctIndex: 2 },
+    { id: 8, questionText: "What is the Turing Test designed to measure?", options: ["A computer's speed of calculation", "A machine's ability to exhibit intelligent behavior equivalent to a human", "The network data throughput", "Database security limits"], correctIndex: 1 },
+    { id: 9, questionText: "In AI, what is an agent?", options: ["A salesperson", "An autonomous entity that perceives its environment and acts upon it", "A database server background thread", "A user interface window button"], correctIndex: 1 },
+    { id: 10, questionText: "What is deep learning?", options: ["Learning deep in a forest", "A subfield of ML based on artificial neural networks with multiple layers", "A basic statistical regression technique", "Database query optimization"], correctIndex: 1 }
+  ],
+  "Cloud Computing": [
+    { id: 1, questionText: "What does SaaS stand for?", options: ["Software as a Service", "System as a Service", "Security as a System", "Server as a Service"], correctIndex: 0 },
+    { id: 2, questionText: "Which cloud service model provides virtualization, servers, storage, and networking?", options: ["SaaS", "PaaS", "IaaS", "DaaS"], correctIndex: 2 },
+    { id: 3, questionText: "What is AWS?", options: ["Amazon Web Services", "Apple Web System", "Architecture Web Standard", "Automated Workflow Server"], correctIndex: 0 },
+    { id: 4, questionText: "What is serverless computing?", options: ["Computing without any physical servers anywhere", "A cloud execution model where the provider manages server allocation dynamically", "Storing files on paper instead of digital drives", "Local PC computing offline"], correctIndex: 1 },
+    { id: 5, questionText: "What is the primary benefit of auto-scaling in the cloud?", options: ["Increasing file storage size manually", "Automatically adjusting cloud resources based on traffic demands", "Enhancing code editor font size", "Reducing database security checks"], correctIndex: 1 },
+    { id: 6, questionText: "Which of the following is Microsoft's cloud platform?", options: ["AWS", "Google Cloud Platform", "Microsoft Azure", "IBM Cloud"], correctIndex: 2 },
+    { id: 7, questionText: "What is a public cloud?", options: ["A cloud built entirely inside a local university", "A cloud platform operated by third-party providers over the public internet", "A free server for anyone to delete files", "An open-source text editor"], correctIndex: 1 },
+    { id: 8, questionText: "What is latency in cloud networks?", options: ["The weight of network cables", "The time delay in network communications", "The storage capacity of hard drives", "The subscription fee of cloud services"], correctIndex: 1 },
+    { id: 9, questionText: "What is cloud migration?", options: ["Moving physical servers to another office", "Moving digital assets, services, databases, and applications to the cloud", "Travelling to inspect cloud datacenters", "Migrating database schemas locally"], correctIndex: 1 },
+    { id: 10, questionText: "Which cloud module is designed for data backup and recovery?", options: ["EC2 instance", "Cloud Storage / S3", "Virtual Private Network", "Firewall gateway"], correctIndex: 1 }
+  ],
+  "Python Programming": [
+    { id: 1, questionText: "What is the correct syntax to output 'Hello World' in Python?", options: ["echo 'Hello World'", "print('Hello World')", "System.out.println('Hello World')", "console.log('Hello World')"], correctIndex: 1 },
+    { id: 2, questionText: "How do you insert comments in Python code?", options: ["// comment", "/* comment */", "# comment", "<!-- comment -->"], correctIndex: 2 },
+    { id: 3, questionText: "Which collection in Python is ordered and changeable, allowing duplicates?", options: ["Set", "List", "Tuple", "Dictionary"], correctIndex: 1 },
+    { id: 4, questionText: "What is the output of len([1, 2, 3, 4]) in Python?", options: ["3", "4", "5", "Error"], correctIndex: 1 },
+    { id: 5, questionText: "Which keyword is used to create a function in Python?", options: ["fun", "function", "def", "create"], correctIndex: 2 },
+    { id: 6, questionText: "What does 'self' refer to in a Python class method?", options: ["The class definition itself", "The current instance of the class", "The parent module", "The system global scope"], correctIndex: 1 },
+    { id: 7, questionText: "What type of data is: x = ['apple', 'banana']?", options: ["tuple", "list", "set", "dictionary"], correctIndex: 1 },
+    { id: 8, questionText: "How do you start a block of code inside a loop or function in Python?", options: ["Using curly braces {}", "Using indentation", "Using parentheses ()", "Using keywords start/end"], correctIndex: 1 },
+    { id: 9, questionText: "Which error occurs when you refer to a variable that has not been defined?", options: ["TypeError", "ValueError", "NameError", "SyntaxError"], correctIndex: 2 },
+    { id: 10, questionText: "What is the purpose of Python's pip command?", options: ["To run test scripts", "To compile Python to machine code", "To download and install external libraries and packages", "To verify directory structure"], correctIndex: 2 }
+  ],
+  "Web Development": [
+    { id: 1, questionText: "What does HTML stand for?", options: ["Hyper Text Markup Language", "Home Tool Markup Language", "Hyperlink and Text Management Language", "Home Tech Main Language"], correctIndex: 0 },
+    { id: 2, questionText: "Which CSS property controls the text size?", options: ["font-style", "text-size", "font-size", "spacing"], correctIndex: 2 },
+    { id: 3, questionText: "What is the correct HTML element for inserting a line break?", options: ["<break>", "<lb>", "<br>", "<newLine>"], correctIndex: 2 },
+    { id: 4, questionText: "Which tag is used to create a clickable hyperlink in HTML?", options: ["<link>", "<a>", "<href>", "<button>"], correctIndex: 1 },
+    { id: 5, questionText: "What is React?", options: ["A backend database management system", "A declarative, efficient, and flexible JavaScript library for building user interfaces", "A server orchestration system", "A programming language like Rust"], correctIndex: 1 },
+    { id: 6, questionText: "Which CSS layout model is designed for one-dimensional layouts?", options: ["Flexbox", "Grid", "Float", "Absolute Positioning"], correctIndex: 0 },
+    { id: 7, questionText: "What does the DOM stand for?", options: ["Data Object Management", "Document Object Model", "Direct Object Mapping", "Distribution Order Model"], correctIndex: 1 },
+    { id: 8, questionText: "Which HTTP status code represents 'Page Not Found'?", options: ["200 OK", "301 Redirect", "404 Not Found", "500 Server Error"], correctIndex: 2 },
+    { id: 9, questionText: "What is the role of JavaScript in web development?", options: ["Creating page layout grids", "Handling website content styling colors", "Adding interactive, dynamic behavior to web pages", "Configuring cloud server ports"], correctIndex: 2 },
+    { id: 10, questionText: "What does API stand for?", options: ["Application Programming Interface", "Auto Programming Integration", "Advanced Process Instance", "Abstract Protocol Interface"], correctIndex: 0 }
+  ],
+  "Digital Marketing": [
+    { id: 1, questionText: "What does SEO stand for?", options: ["Social Engagement Optimizer", "Search Engine Optimization", "Site Entry Organization", "Software Execution Output"], correctIndex: 1 },
+    { id: 2, questionText: "What is CTR?", options: ["Click-Through Rate", "Customer Tracking Ratio", "Conversion Target Route", "Campaign Traffic Report"], correctIndex: 0 },
+    { id: 3, questionText: "Which of the following is a key metric in Pay-Per-Click (PPC) advertising?", options: ["ROI", "CPC (Cost-Per-Click)", "CPM", "All of the above"], correctIndex: 3 },
+    { id: 4, questionText: "What is the main goal of content marketing?", options: ["Spamming user email boxes", "Attracting and retaining a clearly defined audience by creating valuable content", "Writing code for mobile applications", "Running hardware diagnostic runs"], correctIndex: 1 },
+    { id: 5, questionText: "What platform is primarily used for professional business-to-business (B2B) networking and marketing?", options: ["Instagram", "LinkedIn", "TikTok", "Pinterest"], correctIndex: 1 },
+    { id: 6, questionText: "What does CPA stand for in marketing?", options: ["Cost Per Acquisition", "Campaign Performance Analytics", "Customer Program Access", "Central Protocol Association"], correctIndex: 0 },
+    { id: 7, questionText: "What is Google Analytics primarily used for?", options: ["Writing blog articles", "Tracking and reporting website traffic and user behavior", "Running Google Search advertisements", "Sending automated email marketing lists"], correctIndex: 1 },
+    { id: 8, questionText: "What is bounce rate?", options: ["The weight of page loads", "The percentage of visitors who leave a site after viewing only one page", "The speed of user typing inputs", "The subscription cancellation rate"], correctIndex: 1 },
+    { id: 9, questionText: "Which digital channel is best for direct customer retention campaigns?", options: ["Billboards", "Email Marketing", "PPC Search Ads", "Radio Ads"], correctIndex: 1 },
+    { id: 10, questionText: "What does bounce email mean?", options: ["An email that bounces up and down", "An email that is returned to sender because it cannot be delivered", "A successful email campaign", "An email that goes to the spam box only"], correctIndex: 1 }
+  ],
+  "Microsoft Office & Productivity Tools": [
+    { id: 1, questionText: "Which Excel formula is used to look up a value in the first column of a table and return a value in the same row?", options: ["INDEX", "MATCH", "VLOOKUP", "SUMIF"], correctIndex: 2 },
+    { id: 2, questionText: "What is the shortcut to select all content on a page in Microsoft Word?", options: ["Ctrl + S", "Ctrl + A", "Ctrl + C", "Ctrl + V"], correctIndex: 1 },
+    { id: 3, questionText: "Which feature in Microsoft Excel is used to summarize and analyze large datasets quickly?", options: ["Pivot Tables", "Conditional Formatting", "Data Validation", "Mail Merge"], correctIndex: 0 },
+    { id: 4, questionText: "What is the default file extension for Microsoft Word documents in modern versions?", options: [".docx", ".doc", ".txt", ".xlsx"], correctIndex: 0 },
+    { id: 5, questionText: "In Microsoft PowerPoint, what does the 'Slide Sorter' view allow you to do?", options: ["Present slides to the audience", "Reorder, copy, and organize slides easily", "Write slides script notes", "Install plugins"], correctIndex: 1 },
+    { id: 6, questionText: "What does the formula =SUM(A1:A5) do in Excel?", options: ["Calculates the average of cells A1 through A5", "Adds the values of cells A1 through A5", "Finds the maximum value between A1 and A5", "Counts empty cells in A1 through A5"], correctIndex: 1 },
+    { id: 7, questionText: "What is the keyboard shortcut to undo the last action in Office tools?", options: ["Ctrl + Z", "Ctrl + Y", "Ctrl + U", "Ctrl + I"], correctIndex: 0 },
+    { id: 8, questionText: "Which tool is standard for email, calendar, and task management in Microsoft Office?", options: ["MS Access", "MS Outlook", "MS Publisher", "MS Teams"], correctIndex: 1 },
+    { id: 9, questionText: "What does 'Conditional Formatting' do in Excel?", options: ["Formats cells conditionally based on formatting of other sheets", "Changes cell appearance (fill color, text color) based on user-defined cell rules", "Runs validation logic on calculations", "Locks cell edits"], correctIndex: 1 },
+    { id: 10, questionText: "Which application is a relational database management tool in MS Office?", options: ["Excel", "Publisher", "Access", "OneNote"], correctIndex: 2 }
+  ]
+};
