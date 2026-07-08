@@ -1,11 +1,14 @@
 import express from 'express';
 import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { env } from './config/env.js';
 import { connectDB } from './config/db.js';
 import { errorHandler } from './middleware/validate.js';
 import authRoutes from './routes/auth.routes.js';
 import adminRoutes from './routes/admin.routes.js';
 import quizRoutes from './routes/quiz.routes.js';
+import studentRoutes from './routes/student.routes.js';
 import { seedOnStartup } from './utils/startupSeed.js';
 
 const app = express();
@@ -21,8 +24,14 @@ app.use(cors({
     'https://erphubtechnologies.in',
   ],
   credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 app.use(express.json({ limit: '1mb' }));
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
 
 app.get('/api/health', (_req, res) => {
   res.json({ success: true, message: 'ERP Digital Solution API is running' });
@@ -31,6 +40,7 @@ app.get('/api/health', (_req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/quiz', quizRoutes);
+app.use('/api/student', studentRoutes);
 
 app.use(errorHandler);
 

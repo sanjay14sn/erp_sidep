@@ -15,6 +15,11 @@ export interface IUser extends Document {
   password?: string;
   role: 'student' | 'admin';
   isVerified: boolean;
+  paymentStatus: 'unpaid' | 'pending' | 'paid';
+  paymentAmount?: number;
+  paymentPaidAt?: Date;
+  enrolledProgram?: string;
+  scholarshipCodeUsed?: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -35,6 +40,11 @@ const userSchema = new Schema<IUser>(
     password: { type: String, select: false },
     role: { type: String, enum: ['student', 'admin'], default: 'student' },
     isVerified: { type: Boolean, default: false },
+    paymentStatus: { type: String, enum: ['unpaid', 'pending', 'paid'], default: 'unpaid' },
+    paymentAmount: { type: Number },
+    paymentPaidAt: { type: Date },
+    enrolledProgram: { type: String },
+    scholarshipCodeUsed: { type: String },
   },
   { timestamps: true }
 );

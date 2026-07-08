@@ -94,5 +94,17 @@ export const defaultQuestionBank = {
     { id: 8, questionText: "Which tool is standard for email, calendar, and task management in Microsoft Office?", options: ["MS Access", "MS Outlook", "MS Publisher", "MS Teams"], correctIndex: 1 },
     { id: 9, questionText: "What does 'Conditional Formatting' do in Excel?", options: ["Formats cells conditionally based on formatting of other sheets", "Changes cell appearance (fill color, text color) based on user-defined cell rules", "Runs validation logic on calculations", "Locks cell edits"], correctIndex: 1 },
     { id: 10, questionText: "Which application is a relational database management tool in MS Office?", options: ["Excel", "Publisher", "Access", "OneNote"], correctIndex: 2 }
+  ],
+  "Selenium": [
+    { id: 1, questionText: "What is Selenium primarily used for?", options: ["Mobile native app development", "Automating web browsers for testing", "Database performance tuning", "Network security scanning"], correctIndex: 1 },
+    { id: 2, questionText: "Which Selenium component is used to write test scripts in programming languages like Java or Python?", options: ["Selenium IDE", "Selenium WebDriver", "Selenium RC only", "Selenium Grid only"], correctIndex: 1 },
+    { id: 3, questionText: "What does Selenium Grid enable?", options: ["Running tests in parallel across multiple machines and browsers", "Recording tests without code", "Compiling Java bytecode", "Managing SQL databases"], correctIndex: 0 },
+    { id: 4, questionText: "Which locator finds an element using the attribute id='login-btn'?", options: ["By.name", "By.id", "By.linkText", "By.tagName"], correctIndex: 1 },
+    { id: 5, questionText: "What is an implicit wait in Selenium?", options: ["A fixed sleep for every step", "A global timeout for finding elements before throwing an exception", "A wait for page title only", "A manual pause set by the tester"], correctIndex: 1 },
+    { id: 6, questionText: "Which tool is a browser extension for record-and-playback test creation?", options: ["Selenium Grid", "Selenium IDE", "JUnit", "Maven"], correctIndex: 1 },
+    { id: 7, questionText: "What is the purpose of WebDriverWait with ExpectedConditions?", options: ["To wait until a specific condition is met before proceeding", "To close the browser automatically", "To capture screenshots on failure only", "To skip failed test cases"], correctIndex: 0 },
+    { id: 8, questionText: "Which of these is NOT a valid Selenium WebDriver locator strategy?", options: ["xpath", "cssSelector", "databaseQuery", "className"], correctIndex: 2 },
+    { id: 9, questionText: "In the Page Object Model (POM), what is the main benefit?", options: ["Faster browser startup", "Separating page structure from test logic for maintainability", "Eliminating the need for assertions", "Running tests without a browser"], correctIndex: 1 },
+    { id: 10, questionText: "Which statement about Selenium is correct?", options: ["Selenium can automate only Chrome", "Selenium supports cross-browser automation via browser drivers", "Selenium replaces manual QA entirely", "Selenium IDE is required for all WebDriver tests"], correctIndex: 1 }
   ]
 };

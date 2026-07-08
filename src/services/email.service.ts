@@ -116,3 +116,86 @@ export async function sendPasswordResetConfirmationEmail(to: string, fullName: s
     `,
   });
 }
+
+interface PaymentEmailPayload {
+  to: string;
+  studentName: string;
+  courseName: string;
+  amountPaid: number;
+  transactionId: string;
+  paymentDate: Date;
+}
+
+function formatInr(amount: number) {
+  return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(amount);
+}
+
+function formatPaymentDate(date: Date) {
+  return date.toLocaleString('en-IN', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+}
+
+function paymentDetailsBlock(payload: PaymentEmailPayload) {
+  return `
+    <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 20px; margin: 24px 0;">
+      <p style="margin: 0 0 10px 0; font-size: 14px;"><strong>Student Name:</strong> ${payload.studentName}</p>
+      <p style="margin: 0 0 10px 0; font-size: 14px;"><strong>Course Name:</strong> ${payload.courseName}</p>
+      <p style="margin: 0 0 10px 0; font-size: 14px;"><strong>Amount Paid:</strong> ${formatInr(payload.amountPaid)}</p>
+      <p style="margin: 0 0 10px 0; font-size: 14px;"><strong>Transaction ID:</strong> ${payload.transactionId}</p>
+      <p style="margin: 0; font-size: 14px;"><strong>Payment Date:</strong> ${formatPaymentDate(payload.paymentDate)}</p>
+    </div>
+  `;
+}
+
+export async function sendPaymentSubmittedEmail(payload: PaymentEmailPayload): Promise<void> {
+  await transporter.sendMail({
+    from: `"ERP Digital Solution - Accounts Team" <${env.mailUser}>`,
+    to: payload.to,
+    subject: 'Payment Submitted Successfully — ERP Digital Solution',
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 560px; margin: 0 auto; color: #0f172a;">
+        <h2 style="color: #0f172a; margin-bottom: 8px;">Payment Submitted Successfully</h2>
+        <p>Dear <strong>${payload.studentName}</strong>,</p>
+        <p>Thank you for submitting your payment details.</p>
+        <p>We have successfully received your payment screenshot and verification request. Our team will review the submitted payment information shortly.</p>
+        ${paymentDetailsBlock(payload)}
+        <p>Please note that your payment status will remain <strong>pending</strong> until the verification process is completed. You will receive another email once the payment has been verified and approved.</p>
+        <p>If you have any questions, please contact our support team.</p>
+        <p>Thank you for your patience and cooperation.</p>
+        <p style="margin-top: 24px;">Best Regards,<br><strong>Accounts Team</strong><br>ERP Digital Solution</p>
+      </div>
+    `,
+  });
+}
+
+export async function sendPaymentApprovedEmail(payload: PaymentEmailPayload): Promise<void> {
+  const portalUrl = `${env.clientUrl}/dashboard`;
+
+  await transporter.sendMail({
+    from: `"ERP Digital Solution - Accounts Team" <${env.mailUser}>`,
+    to: payload.to,
+    subject: 'Payment Verified & Confirmed — ERP Digital Solution',
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 560px; margin: 0 auto; color: #0f172a;">
+        <h2 style="color: #0f172a; margin-bottom: 8px;">Payment Verified &amp; Confirmed</h2>
+        <p>Dear <strong>${payload.studentName}</strong>,</p>
+        <p>We are pleased to inform you that your payment has been successfully verified and approved.</p>
+        ${paymentDetailsBlock(payload)}
+        <p>Your payment has been recorded in our system, and your account has been updated accordingly. You may now continue using the services associated with your enrollment.</p>
+        <p style="margin: 28px 0;">
+          <a href="${portalUrl}" style="display: inline-block; background: #0f172a; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-weight: 700;">
+            Go to Student Portal
+          </a>
+        </p>
+        <p>Thank you for your prompt payment and cooperation.</p>
+        <p>If you have any questions or require assistance, please feel free to contact our support team.</p>
+        <p style="margin-top: 24px;">Best Regards,<br><strong>Accounts Team</strong><br>ERP Digital Solution</p>
+      </div>
+    `,
+  });
+}

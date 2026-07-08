@@ -3,6 +3,11 @@ import { Program } from '../models/Program.js';
 import { QuizAttempt } from '../models/QuizAttempt.js';
 import { User } from '../models/User.js';
 import { AuthRequest } from '../middleware/auth.js';
+import {
+  isQuizPassed,
+  MAX_QUIZ_ATTEMPTS,
+  SCHOLARSHIP_PASS_PERCENT,
+} from '../utils/quizRules.js';
 
 function paramString(value: string | string[]): string {
   const raw = Array.isArray(value) ? value[0] : value;
@@ -19,6 +24,40 @@ function generateCouponCode(programName: string): string {
     randomStr += chars.charAt(Math.floor(Math.random() * chars.length));
   }
   return `${prefix}${year}${randomStr}`;
+}
+
+function mapAttemptResponse(attempt: InstanceType<typeof QuizAttempt>) {
+  const scorePercent = (attempt.score / attempt.totalQuestions) * 100;
+  return {
+    id: attempt._id.toString(),
+    candidateName: attempt.candidateName,
+    program: attempt.program,
+    score: attempt.score,
+    totalQuestions: attempt.totalQuestions,
+    scorePercent,
+    couponCode: attempt.couponCode || null,
+    generatedAt: attempt.createdAt,
+    status: attempt.status,
+    scholarshipEarned: isQuizPassed(attempt.score, attempt.totalQuestions),
+  };
+}
+
+function buildQuizStatus(attempts: InstanceType<typeof QuizAttempt>[]) {
+  const latest = attempts[0] ?? null;
+  const passingAttempt = attempts.find((a) => isQuizPassed(a.score, a.totalQuestions)) ?? null;
+  const attemptCount = attempts.length;
+  const scholarshipEarned = !!passingAttempt;
+  const canRetake = !scholarshipEarned && attemptCount < MAX_QUIZ_ATTEMPTS;
+
+  return {
+    latest,
+    passingAttempt,
+    attemptCount,
+    maxAttempts: MAX_QUIZ_ATTEMPTS,
+    canRetake,
+    scholarshipEarned,
+    passPercentRequired: SCHOLARSHIP_PASS_PERCENT,
+  };
 }
 
 export async function listPrograms(_req: AuthRequest, res: Response): Promise<void> {
@@ -66,6 +105,25 @@ export async function submitQuizAttempt(req: AuthRequest, res: Response): Promis
     return;
   }
 
+  const existingAttempts = await QuizAttempt.find({ userId: user._id }).sort({ createdAt: -1 });
+  const quizStatus = buildQuizStatus(existingAttempts);
+
+  if (quizStatus.scholarshipEarned) {
+    res.status(400).json({
+      success: false,
+      message: 'You have already passed the assessment and received your scholarship.',
+    });
+    return;
+  }
+
+  if (!quizStatus.canRetake) {
+    res.status(400).json({
+      success: false,
+      message: `Maximum quiz attempts (${MAX_QUIZ_ATTEMPTS}) reached. Scholarship requires ${SCHOLARSHIP_PASS_PERCENT}% or higher.`,
+    });
+    return;
+  }
+
   const programDoc = await Program.findOne({ name: program, isActive: true });
   if (!programDoc || programDoc.questions.length !== 10) {
     res.status(400).json({ success: false, message: 'Program must have exactly 10 questions.' });
@@ -90,7 +148,9 @@ export async function submitQuizAttempt(req: AuthRequest, res: Response): Promis
     return { questionIndex, selectedIndex, isCorrect: !!isCorrect };
   });
 
-  const couponCode = generateCouponCode(program);
+  const scorePercent = (score / 10) * 100;
+  const passed = isQuizPassed(score, 10);
+  const couponCode = passed ? generateCouponCode(program) : '';
 
   const attempt = await QuizAttempt.create({
     userId: user._id,
@@ -103,55 +163,62 @@ export async function submitQuizAttempt(req: AuthRequest, res: Response): Promis
     answers: detailedAnswers,
   });
 
+  const attemptCount = existingAttempts.length + 1;
+  const scholarshipEarned = passed;
+  const canRetake = !passed && attemptCount < MAX_QUIZ_ATTEMPTS;
+
   res.status(201).json({
     success: true,
-    attempt: {
-      id: attempt._id.toString(),
-      candidateName: attempt.candidateName,
-      program: attempt.program,
-      score: attempt.score,
-      totalQuestions: attempt.totalQuestions,
-      couponCode: attempt.couponCode,
-      generatedAt: attempt.createdAt,
-      status: attempt.status,
-    },
+    attempt: mapAttemptResponse(attempt),
     result: {
       correct: score,
       wrong: 10 - score,
-      scorePercent: (score / 10) * 100,
-      couponCode,
+      scorePercent,
+      couponCode: couponCode || null,
       generatedTime: attempt.createdAt,
+      scholarshipEarned,
+      attemptCount,
+      maxAttempts: MAX_QUIZ_ATTEMPTS,
+      canRetake,
+      passPercentRequired: SCHOLARSHIP_PASS_PERCENT,
     },
   });
 }
 
 export async function getMyLatestAttempt(req: AuthRequest, res: Response): Promise<void> {
-  const attempt = await QuizAttempt.findOne({ userId: req.user!.userId })
-    .sort({ createdAt: -1 });
+  const attempts = await QuizAttempt.find({ userId: req.user!.userId }).sort({ createdAt: -1 });
+  const status = buildQuizStatus(attempts);
 
-  if (!attempt) {
-    res.json({ success: true, attempt: null });
+  if (!status.latest) {
+    res.json({
+      success: true,
+      attempt: null,
+      passingAttempt: null,
+      attemptCount: 0,
+      maxAttempts: MAX_QUIZ_ATTEMPTS,
+      canRetake: true,
+      scholarshipEarned: false,
+      passPercentRequired: SCHOLARSHIP_PASS_PERCENT,
+    });
     return;
   }
 
   res.json({
     success: true,
-    attempt: {
-      id: attempt._id.toString(),
-      program: attempt.program,
-      score: attempt.score,
-      totalQuestions: attempt.totalQuestions,
-      couponCode: attempt.couponCode,
-      generatedAt: attempt.createdAt,
-      status: attempt.status,
-    },
+    attempt: mapAttemptResponse(status.latest),
+    passingAttempt: status.passingAttempt ? mapAttemptResponse(status.passingAttempt) : null,
+    attemptCount: status.attemptCount,
+    maxAttempts: status.maxAttempts,
+    canRetake: status.canRetake,
+    scholarshipEarned: status.scholarshipEarned,
+    passPercentRequired: status.passPercentRequired,
   });
 }
 
 export async function listAttempts(req: AuthRequest, res: Response): Promise<void> {
   const { program, page = '1', limit = '20' } = req.query;
   const pageNum = Math.max(1, parseInt(page as string, 10));
-  const limitNum = Math.min(100, Math.max(1, parseInt(limit as string, 10)));
+  const limitNum = Math.min(10000, Math.max(1, parseInt(limit as string, 10)));
   const skip = (pageNum - 1) * limitNum;
 
   const filter: Record<string, unknown> = {};
@@ -168,17 +235,14 @@ export async function listAttempts(req: AuthRequest, res: Response): Promise<voi
 
   res.json({
     success: true,
-    data: attempts.map((a) => ({
-      id: a._id.toString(),
-      candidateName: a.candidateName,
-      program: a.program,
-      score: a.score,
-      totalQuestions: a.totalQuestions,
-      couponCode: a.couponCode,
-      generatedAt: a.createdAt,
-      status: a.status,
-    })),
-    pagination: { page: pageNum, limit: limitNum, total, pages: Math.ceil(total / limitNum) },
+    data: attempts.map((a) => mapAttemptResponse(a)),
+    pagination: {
+      page: pageNum,
+      limit: limitNum,
+      total,
+      pages: Math.ceil(total / limitNum),
+      totalPages: Math.ceil(total / limitNum),
+    },
   });
 }
 

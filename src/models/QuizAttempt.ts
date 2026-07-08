@@ -20,7 +20,7 @@ const quizAttemptSchema = new Schema<IQuizAttempt>(
     program: { type: String, required: true, index: true },
     score: { type: Number, required: true },
     totalQuestions: { type: Number, required: true },
-    couponCode: { type: String, required: true },
+    couponCode: { type: String, default: '' },
     status: { type: String, default: 'completed' },
     answers: [
       {
