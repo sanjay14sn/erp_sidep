@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { authenticate } from '../middleware/auth.js';
 import { paymentScreenshotUpload } from '../middleware/upload.js';
 import * as studentController from '../controllers/student.controller.js';
+import * as scheduleController from '../controllers/schedule.controller.js';
 
 const router = Router();
 
@@ -28,5 +29,7 @@ router.post(
 
 router.get('/support', studentController.getSupportRequests);
 router.post('/support', studentController.submitSupportRequest);
+
+router.get('/schedule', scheduleController.listStudentSchedules);
 
 export default router;
